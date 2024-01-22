@@ -40,11 +40,18 @@ export class UsersService {
     })
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(updateUserDto: UpdateUserDto) {
+    return await this.userModel.updateOne(
+      { _id: updateUserDto._id },
+      { ...updateUserDto }
+    );
   }
 
   remove(id: string) {
-    return `This action removes a #${id} user`;
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return "Không tìm thấy user";
+    return this.userModel.deleteOne({
+      _id: id
+    })
   }
 }
