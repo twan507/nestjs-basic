@@ -7,7 +7,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [
+  imports: [UsersModule, AuthModule,
+
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -15,14 +16,11 @@ import { AuthModule } from './auth/auth.module';
       }),
       inject: [ConfigService],
     }),
-    
+
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
+    })
 
-    UsersModule,
-
-    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
