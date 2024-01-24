@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
+import { Request } from 'express';
 
 @Controller('companies')
 export class CompaniesController {
@@ -11,7 +12,6 @@ export class CompaniesController {
 
   @Post()
   create(@Body() createCompanyDto: CreateCompanyDto, @User() user: IUser) {
-    console.log(createCompanyDto)
     return this.companiesService.create(createCompanyDto, user);
   }
 

@@ -15,7 +15,13 @@ export class CompaniesService {
   ) { }
 
   create(createCompanyDto: CreateCompanyDto, user: IUser) {
-    return this.companyModel.create({ ...CreateCompanyDto })
+    return this.companyModel.create({
+      ...createCompanyDto,
+      createdBy: {
+        _id: user._id,
+        email: user.email
+      }
+    })
   }
 
   findAll() {
