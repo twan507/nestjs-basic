@@ -5,6 +5,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Company, CompanyDocument } from './schemas/company.schemas';
 import { IUser } from 'src/users/users.interface';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class CompaniesService {
@@ -14,8 +15,8 @@ export class CompaniesService {
     private companyModel: SoftDeleteModel<CompanyDocument>
   ) { }
 
-  create(createCompanyDto: CreateCompanyDto, user: IUser) {
-    return this.companyModel.create({
+  async create(createCompanyDto: CreateCompanyDto, user: IUser) {
+    return await this.companyModel.create({
       ...createCompanyDto,
       createdBy: {
         _id: user._id,
@@ -32,11 +33,35 @@ export class CompaniesService {
     return `This action returns a #${id} company`;
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {
+    return await this.companyModel.updateOne(
+      { _id: id },
+      {
+        ...updateCompanyDto,
+        updatedBy: {
+          _id: user._id,
+          email: user.email
+        }
+      }
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: string, user: IUser) {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return "Không tìm thấy user";
+
+    await this.companyModel.updateOne(
+      { _id: id },
+      {
+        deletedBy: {
+          _id: user._id,
+          email: user.email
+        }
+      }
+    )
+    return this.companyModel.softDelete({
+      _id: id
+    })
   }
+
 }
