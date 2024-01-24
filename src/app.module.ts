@@ -9,7 +9,7 @@ import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
 import { CompaniesModule } from './companies/companies.module';
 
 @Module({
-  imports: [UsersModule, AuthModule,
+  imports: [UsersModule, AuthModule,CompaniesModule,
 
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,10 +27,8 @@ import { CompaniesModule } from './companies/companies.module';
 
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-
-    CompaniesModule
-
+    })
+    
   ],
   controllers: [AppController],
   providers: [AppService],

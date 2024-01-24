@@ -22,7 +22,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     handleRequest(err, user, info) {
         if (err || !user) {
-            throw err || new UnauthorizedException("Sai tên đăng nhập hoặc mật khẩu");
+            throw err || new UnauthorizedException("Token không hợp lệ hoặc không có Baerer token ở Header request");
         }
         return user;
     }
