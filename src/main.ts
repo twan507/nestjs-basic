@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
 
@@ -34,6 +34,13 @@ async function bootstrap() {
 
   //Khai báo intercepter global để chuẩn hoá dữ liệu đầu ra
   app.useGlobalInterceptors(new TransformInterceptor(reflector));
+
+  //Khai báo đánh dấu version cho API
+  app.setGlobalPrefix('api')
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: ['1']
+  });
 
   //Câu lệnh sử dụng để bắn dự án lên cổng local host
   await app.listen(configService.get<string>('PORT'));

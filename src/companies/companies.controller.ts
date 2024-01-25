@@ -15,7 +15,7 @@ export class CompaniesController {
   }
 
   @Get()
-  @ResponseMessage("Fetch lisst company with paginate")
+  @ResponseMessage("Fetch list company with paginate")
   findAll(
     @Query("page") currentPage: string,
     @Query("limit") limit: string,
