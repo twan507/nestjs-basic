@@ -8,6 +8,16 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
 import cookieParser from 'cookie-parser';
 
+// export var loginPort = 1
+
+// export function checkLoginPort() {
+//   if (loginPort === 1) {
+//     loginPort = 2
+//   } else if (loginPort === 2) {
+//     loginPort = 1
+//   }
+// }
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule,);
 
@@ -28,9 +38,10 @@ async function bootstrap() {
 
   //Sửa lỗi CORS, trường origin dùng để định nghĩa các domain có thể truy cập backend
   app.enableCors({
-    "origin": "*",
+    "origin": true,
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false
+    "preflightContinue": false,
+    credentials: true
   });
 
   //Khai báo intercepter global để chuẩn hoá dữ liệu đầu ra
