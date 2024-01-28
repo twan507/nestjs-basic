@@ -23,9 +23,9 @@ export class User {
     @Prop()
     address: string;
 
-    @Prop({type: Object})
+    @Prop({ type: Object })
     company: {
-        _id:Types.ObjectId
+        _id: Types.ObjectId
         name: string
     };
 
@@ -64,6 +64,9 @@ export class User {
 
     @Prop()
     deletedAt: Date;
+
+    @Prop()
+    tokens: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -8,16 +8,6 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
 import cookieParser from 'cookie-parser';
 
-// export var loginPort = 1
-
-// export function checkLoginPort() {
-//   if (loginPort === 1) {
-//     loginPort = 2
-//   } else if (loginPort === 2) {
-//     loginPort = 1
-//   }
-// }
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule,);
 

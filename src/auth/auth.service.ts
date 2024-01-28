@@ -37,7 +37,8 @@ export class AuthService {
     }
 
     async login(user: IUser, response: Response) {
-        const { _id, name, email, role } = user;
+
+        const { _id, name, email, role, tokens } = user;
         const payload = {
             sub: "token login",
             iss: "from server",
@@ -57,6 +58,12 @@ export class AuthService {
             httpOnly: true,
             maxAge: ms(this.configService.get<string>(("JWT_REFRESH_EXPIRE")))
         })
+
+        //logic check số lượng đăng nhập
+        const MAX_DEVICES = 2;
+        if (tokens.length >= MAX_DEVICES) {
+            this.usersService.updateTokensArray(_id);
+        }
 
         return {
             access_token: this.jwtService.sign(payload),
@@ -83,7 +90,9 @@ export class AuthService {
                 secret: this.configService.get<string>("JWT_REFRESH_SECRET")
             })
             let user = await this.usersService.findUserByToken(refreshToken)
+
             if (user) {
+
                 const { _id, name, email, role } = user;
                 const payload = {
                     sub: "token refresh",
@@ -94,14 +103,14 @@ export class AuthService {
                     role
                 };
 
-                const refresh_token = this.createRefreshToken(payload)
+                const newRefreshToken = this.createRefreshToken(payload)
 
                 //update refresh token vào trong DB
-                await this.usersService.updateUserToken(refresh_token, _id.toString())
+                await this.usersService.refreshTokensArray(_id.toString(), refreshToken, newRefreshToken);
 
                 //xoá refresh token cũ và set refresh token mới vào cookies
                 response.clearCookie("refresh_token")
-                response.cookie('refresh_token', refresh_token, {
+                response.cookie('refresh_token', newRefreshToken, {
                     httpOnly: true,
                     maxAge: ms(this.configService.get<string>(("JWT_REFRESH_EXPIRE")))
                 })
@@ -122,8 +131,8 @@ export class AuthService {
         }
     }
 
-    async logout (response: Response, user: IUser) {
-        await this.usersService.updateUserToken("", user._id);
+    async logout(response: Response, user: IUser, refreshToken: string) {
+        await this.usersService.logoutUser(user._id, refreshToken);
         response.clearCookie('refresh_roken')
         return "ok"
     }

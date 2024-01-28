@@ -111,9 +111,8 @@ export class UsersService {
   }
 
   async findUserByToken(refreshToken: string) {
-    return await this.userModel.findOne({
-      refreshToken
-    })
+    const user = await this.userModel.findOne({ 'tokens': refreshToken });
+    return user;
   }
 
   isValidPassword(password: string, hash: string) {
@@ -150,10 +149,43 @@ export class UsersService {
     })
   }
 
+  updateTokensArray = async (_id: string) => {
+    const user = await this.userModel.findOne({ _id: _id });
+    const tokensToKeep = user.tokens.slice(-2); // Cắt lấy 2 phần tử cuối cùng
+    await this.userModel.updateOne(
+      { _id: _id },
+      { $set: { tokens: tokensToKeep } }
+    );
+  }
+
+  refreshTokensArray = async (_id: string, refreshToken, newRefreshToken) => {
+    const user = await this.userModel.findOne({ _id: _id });
+    let newTokensList = user.tokens.map(item => item === refreshToken ? newRefreshToken : item);
+    await this.userModel.updateOne(
+      { _id: _id },
+      { $set: { tokens: newTokensList } }
+    );
+  }
+
   updateUserToken = async (refreshToken: string, _id: string) => {
     return await this.userModel.updateOne(
       { _id },
-      { refreshToken }
+      { $push: { tokens: refreshToken } }
     )
   }
+
+
+  logoutUser = async (_id: string, refreshToken: string) => {
+    const user = await this.userModel.findOne({ _id: _id });
+    let newTokensList = user.tokens.filter(item => item !== refreshToken);
+    return await this.userModel.updateOne(
+      { _id: _id },
+      { $set: { tokens: newTokensList } }
+    );
+  }
+
 }
+// tokens: [{
+//   token: String,
+//   createdAt: { type: Date }
+// }]
