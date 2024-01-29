@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -66,10 +66,10 @@ export class JobsService {
     }
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id))
-      return "Không tìm thấy user";
-    return this.jobModel.findOne({
+      throw new BadRequestException("Không tim thấy id:", id)
+    return await this.jobModel.findOne({
       _id: id
     })
   }
