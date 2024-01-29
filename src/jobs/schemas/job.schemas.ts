@@ -9,28 +9,25 @@ export class Job {
     name: string;
 
     @Prop()
-    skill: string;
+    skills: string[];
+
+    @Prop({ type: Object })
+    company: {
+        _id: Types.ObjectId
+        name: string
+    };
 
     @Prop()
-    location: string;
+    salary: number;
 
     @Prop()
-    salary: string;
-
-    @Prop()
-    quantity: string;
+    quantity: number;
 
     @Prop()
     level: string;
 
     @Prop()
     description: string;
-
-    @Prop({type: Object})
-    company: {
-        _id:Types.ObjectId
-        name: string
-    };
 
     @Prop()
     startDate: Date;
@@ -40,6 +37,36 @@ export class Job {
 
     @Prop()
     isActive: boolean;
+
+    @Prop({ type: Object })
+    createdBy: {
+        _id: Types.ObjectId
+        email: string
+    };
+
+    @Prop({ type: Object })
+    updatedBy: {
+        _id: Types.ObjectId
+        email: string
+    };
+
+    @Prop({ type: Object })
+    deletedBy: {
+        _id: Types.ObjectId
+        email: string
+    };
+
+    @Prop()
+    createdAt: Date;
+
+    @Prop()
+    updatedAt: Date;
+
+    @Prop()
+    isDeleted: boolean;
+
+    @Prop()
+    deletedAt: Date;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);

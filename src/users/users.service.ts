@@ -158,7 +158,7 @@ export class UsersService {
     );
   }
 
-  refreshTokensArray = async (_id: string, refreshToken, newRefreshToken) => {
+  refreshTokensArray = async (_id: string, refreshToken: string, newRefreshToken: string) => {
     const user = await this.userModel.findOne({ _id: _id });
     let newTokensList = user.tokens.map(item => item === refreshToken ? newRefreshToken : item);
     await this.userModel.updateOne(
@@ -185,7 +185,3 @@ export class UsersService {
   }
 
 }
-// tokens: [{
-//   token: String,
-//   createdAt: { type: Date }
-// }]
