@@ -43,6 +43,9 @@ export class Company {
 
     @Prop()
     deletedAt: Date;
+
+    @Prop()
+    logo: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

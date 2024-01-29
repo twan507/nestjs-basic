@@ -38,6 +38,9 @@ export class CreateJobDto {
     @IsNotEmpty({ message: "Description không được để trống" })
     description: string;
 
+    @IsNotEmpty({ message: "Location không được để trống" })
+    location: string;
+
     @IsNotEmpty({ message: "Description không được để trống" })
     @Transform(({ value }) => new Date(value))
     @IsDate({message: 'startDate có định dạng là Date'})

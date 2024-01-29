@@ -29,6 +29,7 @@ export class JobsService {
       startDate,
       endDate,
       isActive,
+      location,
       createdBy: {
         _id: user._id,
         email: user.email
