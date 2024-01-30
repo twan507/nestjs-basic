@@ -1,5 +1,5 @@
 import { Type } from "class-transformer"
-import { IsArray, IsEmail, IsNotEmpty, IsNotEmptyObject, IsObject, IsString, ValidateNested } from "class-validator"
+import { IsArray, IsEmail, IsMongoId, IsNotEmpty, IsNotEmptyObject, IsObject, IsString, ValidateNested } from "class-validator"
 import { Types } from "mongoose"
 
 class Company {
@@ -32,12 +32,8 @@ export class CreateUserDto {
     address: string
 
     @IsNotEmpty({message: "Role không được để trống"})
+    @IsMongoId({message: "Role phải có định dạng là MongoId"})
     role: string
-
-    @IsNotEmpty({message: "permissions không được để trống"})
-    @IsArray({message: "permissions phải có định dạng là array"})
-    @IsString({each: true, message: 'each permission phải là String'})
-    tokens: string[]
 
     @IsNotEmptyObject()
     @IsObject()

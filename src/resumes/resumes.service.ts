@@ -108,9 +108,18 @@ export class ResumesService {
   }
 
   async findOneByUser(user: IUser) {
-    return await this.resumeModel.findOne(
-      { userId: user._id },
-    )
+    return await this.resumeModel.findOne({ userId: user._id })
+      .sort("-createdAt")
+      .populate([
+        {
+          path: "companyId",
+          select: { name: 1 }
+        },
+        {
+          path: "jobId",
+          select: { name: 1 }
+        },
+      ])
   }
 
 }

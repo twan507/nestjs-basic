@@ -99,15 +99,16 @@ export class UsersService {
   findOne(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id))
       return "Không tìm thấy user";
-    return this.userModel.findOne({
-      _id: id
-    }).select("-password") //Bỏ đi thuộc tính password để không lấy được
+    return this.userModel.findOne({ _id: id })
+      .select("-password") //Bỏ đi thuộc tính password để không lấy được
+      .populate({ path: "role", select: { name: 1, _id: 1 } })
+
   }
 
   findOneByUsername(username: string) {
     return this.userModel.findOne({
       email: username
-    })
+    }).populate({ path: "role", select: { name: 1, _id: 1 } })
   }
 
   async findUserByToken(refreshToken: string) {
@@ -136,6 +137,12 @@ export class UsersService {
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id))
       return "Không tìm thấy user";
+
+    const foundUser = await this.userModel.findById(id)
+    if (foundUser.email === "admin@gmail.com") {
+      throw new BadRequestException("Không thể xoá tài khoản Admin")
+    }
+
     await this.userModel.updateOne(
       { _id: id },
       {
@@ -173,7 +180,6 @@ export class UsersService {
       { $push: { tokens: refreshToken } }
     )
   }
-
 
   logoutUser = async (_id: string, refreshToken: string) => {
     const user = await this.userModel.findOne({ _id: _id });
