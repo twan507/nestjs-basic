@@ -95,7 +95,7 @@ export class RolesService {
       return "Không tìm thấy user";
 
     const foundRole = await this.roleModel.findById(id)
-    if (foundRole.name === "ADMIN" || foundRole.name === "USER") {
+    if (foundRole.name === "ADMIN_ROLE" || foundRole.name === "USER_ROLE") {
       throw new BadRequestException("Không thể xoá role ADMIN và USER")
     }
 
