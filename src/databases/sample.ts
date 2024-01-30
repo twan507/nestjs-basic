@@ -3,6 +3,106 @@ export const USER_ROLE = "NORMAL_USER";
 
 export const INIT_PERMISSIONS = [
     {
+        "_id": "65b90bb2414ff416bdbc8d1d",
+        "name": "Delete a Subscriber",
+        "apiPath": "/api/v1/subscribers/:id",
+        "method": "DELETE",
+        "module": "SUBSCRIBERS",
+        "createdBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        },
+        "isDeleted": false,
+        "deletedAt": null,
+        "createdAt": "2023-06-15T06:47:49.369Z",
+        "updatedAt": "2023-06-15T06:54:05.131Z",
+        "__v": 0,
+        "updatedBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        }
+    },
+    {
+        "_id": "65b90b7edc2301c6ed7ca0eb",
+        "name": "Update a Subscriber",
+        "apiPath": "/api/v1/subscribers/:id",
+        "method": "PATCH",
+        "module": "SUBSCRIBERS",
+        "createdBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        },
+        "isDeleted": false,
+        "deletedAt": null,
+        "createdAt": "2023-06-15T06:47:49.369Z",
+        "updatedAt": "2023-06-15T06:54:05.131Z",
+        "__v": 0,
+        "updatedBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        }
+    },
+    {
+        "_id": "65b90b35b6d41897b17fcf15",
+        "name": "Fetch a Subscriber",
+        "apiPath": "/api/v1/subscribers/:id",
+        "method": "GET",
+        "module": "SUBSCRIBERS",
+        "createdBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        },
+        "isDeleted": false,
+        "deletedAt": null,
+        "createdAt": "2023-06-15T06:47:49.369Z",
+        "updatedAt": "2023-06-15T06:54:05.131Z",
+        "__v": 0,
+        "updatedBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        }
+    },
+    {
+        "_id": "65b90af39763cc8be3a1a4a0",
+        "name": "Fetch all Subscribes with paginate",
+        "apiPath": "/api/v1/subscribers",
+        "method": "GET",
+        "module": "SUBSCRIBERS",
+        "createdBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        },
+        "isDeleted": false,
+        "deletedAt": null,
+        "createdAt": "2023-06-15T06:47:49.369Z",
+        "updatedAt": "2023-06-15T06:54:05.131Z",
+        "__v": 0,
+        "updatedBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        }
+    },
+    {
+        "_id": "65b90a3fe03da0ed0bf59373",
+        "name": "Create a new Subscriber",
+        "apiPath": "/api/v1/subscribers",
+        "method": "POST",
+        "module": "SUBSCRIBERS",
+        "createdBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        },
+        "isDeleted": false,
+        "deletedAt": null,
+        "createdAt": "2023-06-15T06:47:49.369Z",
+        "updatedAt": "2023-06-15T06:54:05.131Z",
+        "__v": 0,
+        "updatedBy": {
+            "_id": "647b5108a8a243e8191855b5",
+            "email": "hoidanit@gmail.com"
+        }
+    },
+    {
         "_id": "648ab415f4328bd3153ee211",
         "name": "Get Company with paginate",
         "apiPath": "/api/v1/companies",
