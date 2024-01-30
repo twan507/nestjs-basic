@@ -62,4 +62,8 @@ export class RegisterUserDto {
 
     @IsNotEmpty({message: "Pasword không được để trống"})
     address: string
+
+    @IsNotEmpty({message: "Role không được để trống"})
+    @IsMongoId({message: "Role phải có định dạng là MongoId"})
+    role: string
 }

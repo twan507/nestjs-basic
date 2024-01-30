@@ -95,8 +95,8 @@ export class RolesService {
       return "Không tìm thấy user";
 
     const foundRole = await this.roleModel.findById(id)
-    if (foundRole.name === "ADMIN") {
-      throw new BadRequestException("Không thể xoá role ADMIN")
+    if (foundRole.name === "ADMIN" || foundRole.name === "USER") {
+      throw new BadRequestException("Không thể xoá role ADMIN và USER")
     }
 
     await this.roleModel.updateOne(
