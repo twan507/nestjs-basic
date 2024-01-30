@@ -1,4 +1,5 @@
 import { IsMongoId, IsNotEmpty } from "class-validator"
+import { Types } from "mongoose"
 
 export class CreateResumeDto {
 
@@ -30,10 +31,10 @@ export class CreateUserCvDto {
 
     @IsNotEmpty({message: "companyId không được để trống"})
     @IsMongoId({message: "companyId phải là MongoId"})
-    companyId: string
+    companyId: Types.ObjectId
 
     @IsNotEmpty({message: "jobId không được để trống"})
     @IsMongoId({message: "jobId phải là MongoId"})
-    jobId: string
+    jobId: Types.ObjectId
 }
 

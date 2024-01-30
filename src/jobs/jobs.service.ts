@@ -18,8 +18,7 @@ export class JobsService {
 
   async create(createJobDto: CreateJobDto, user: IUser) {
     const { name, skills, salary, quantity, level, description, startDate, endDate, isActive } = createJobDto
-
-    let newUser = await this.jobModel.create({
+    let newJob = await this.jobModel.create({
       name,
       skills,
       salary,
@@ -35,7 +34,7 @@ export class JobsService {
         email: user.email
       }
     })
-    return newUser;
+    return newJob;
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {

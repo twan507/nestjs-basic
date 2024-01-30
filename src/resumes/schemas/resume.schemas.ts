@@ -9,7 +9,7 @@ export class Resume {
     email: string;
 
     @Prop()
-    userID: Types.ObjectId;
+    userId: Types.ObjectId;
 
     @Prop()
     url: string;
