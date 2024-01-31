@@ -6,6 +6,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 import { SubscriberDocument, Subscriber } from 'src/subscribers/schemas/subscriber.schemas';
 import { Job, JobDocument } from 'src/jobs/schemas/job.schemas';
 import { InjectModel } from '@nestjs/mongoose';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Controller('mail')
 export class MailController {
@@ -22,6 +23,7 @@ export class MailController {
 
   @Get()
   @Public()
+  @Cron(CronExpression.EVERY_WEEKEND)
   @ResponseMessage("Test email")
   async handleTestEmail() {
 
@@ -48,7 +50,6 @@ export class MailController {
             jobs: jobs
           }
         });
-
       }
     }
   }

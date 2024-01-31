@@ -24,7 +24,7 @@ async function bootstrap() {
   app.setViewEngine('ejs');
 
   //Khai báo global việc check validation trong các file DTO
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({whitelist: true}))
 
   //Sửa lỗi CORS, trường origin dùng để định nghĩa các domain có thể truy cập backend
   app.enableCors({
