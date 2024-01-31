@@ -25,7 +25,7 @@ export class SubscribersService {
     if (isExist) {
       throw new BadRequestException(`Email: ${email} đã tồn tại`)
     }
-    
+
     const newSubscriber = await this.subscriberModel.create({
       name, email, skills,
       createdBy: {
@@ -74,16 +74,23 @@ export class SubscribersService {
     return this.subscriberModel.findOne({ _id: id })
   }
 
-  async update(id: string, updateSubscriberDto: UpdateSubscriberDto, user: IUser) {
+  async getSkills(user: IUser) {
+    const { email } = user
+    //Sử dụng hàm findOne để chỉ trả về Skills thay vì trả về full thông tin
+    return await this.subscriberModel.findOne({ email }, { skills: 1 })
+  }
+
+  async update(updateSubscriberDto: UpdateSubscriberDto, user: IUser) {
     return await this.subscriberModel.updateOne(
-      { _id: id },
+      { email: user.email },
       {
         ...updateSubscriberDto,
         updatedBy: {
           _id: user._id,
           email: user.email
         }
-      }
+      },
+      { upsert: true } //Nếu bản ghi tồn tại thì update, còn chưa có thì thêm mới
     );
   }
 

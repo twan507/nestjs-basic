@@ -5,6 +5,10 @@ import { ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Subscriber } from 'rxjs';
+import { SubscriberSchema } from 'src/subscribers/schemas/subscriber.schemas';
+import { Job, JobSchema } from 'src/jobs/schemas/job.schemas';
 
 @Module({
   imports: [
@@ -19,16 +23,21 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           },
         },
         template: {
-        dir: join(__dirname, 'templates'),
-        adapter: new HandlebarsAdapter(),
-        options: {
-        strict: true,
+          dir: join(__dirname, 'templates'),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
         },
-        },
-        preview: configService.get<string>("EMAIL_PREVIEW") === 'true'? true : false
+        preview: configService.get<string>("EMAIL_PREVIEW") === 'true' ? true : false
       }),
       inject: [ConfigService],
     }),
+
+    MongooseModule.forFeature([
+      { name: Subscriber.name, schema: SubscriberSchema },
+      { name: Job.name, schema: JobSchema }
+    ])
   ],
   controllers: [MailController],
   providers: [MailService]

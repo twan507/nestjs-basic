@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { SubscribersService } from './subscribers.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
-import { Public, ResponseMessage, User } from 'src/decorator/customize';
+import { Public, ResponseMessage, SkipCheckPermission, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 
 @Controller('subscribers')
@@ -12,6 +12,13 @@ export class SubscribersController {
   @Post()
   create(@Body() createSubscriberDto: CreateSubscriberDto, @User() user: IUser) {
     return this.subscribersService.create(createSubscriberDto, user);
+  }
+
+  @Post('skills')
+  @SkipCheckPermission()
+  @ResponseMessage("Fetch Subscriber skills")
+  getUserSkills(@User() user: IUser) {
+    return this.subscribersService.getSkills(user);
   }
 
   @Get()
@@ -31,9 +38,10 @@ export class SubscribersController {
   }
 
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto, @User() user: IUser) {
-    return this.subscribersService.update(id, updateSubscriberDto, user);
+  @Patch()
+  @SkipCheckPermission()
+  update(@Body() updateSubscriberDto: UpdateSubscriberDto, @User() user: IUser) {
+    return this.subscribersService.update(updateSubscriberDto, user);
   }
 
   @Delete(':id')
